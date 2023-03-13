@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
+import Card from "../../shared/components/UIElements/Card";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
@@ -40,7 +41,7 @@ const DUMMY_PLACES = [
 ];
 
 const UpdatePlace = (props) => {
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const placeId = useParams().placeId;
 
   const [formState, inputHandler, setFormData] = useForm(
@@ -59,19 +60,21 @@ const UpdatePlace = (props) => {
 
   const place = DUMMY_PLACES.find((place) => place.id === placeId);
   useEffect(() => {
-    setFormData(
-      {
-        title: {
-          value: place.title,
-          isValid: true,
+    if (place) {
+      setFormData(
+        {
+          title: {
+            value: place.title,
+            isValid: true,
+          },
+          description: {
+            value: place.description,
+            isValid: true,
+          },
         },
-        description: {
-          value: place.description,
-          isValid: true,
-        },
-      },
-      true
-    );
+        true
+      );
+    }
     setIsLoading(false);
   }, [setFormData, place]);
 
@@ -83,7 +86,9 @@ const UpdatePlace = (props) => {
   if (!place) {
     return (
       <div className="center">
-        <h2>Could not find place!</h2>
+        <Card>
+          <h2>Could not find place!</h2>
+        </Card>
       </div>
     );
   }
