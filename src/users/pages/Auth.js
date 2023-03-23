@@ -37,8 +37,6 @@ const Auth = () => {
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(process.env.REACT_APP_BACKEND_URL)
-    console.log(formState)
     if (isLoginMode) {
       try {
         const user = await sendRequest(
